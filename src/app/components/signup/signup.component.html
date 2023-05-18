@@ -12,6 +12,15 @@
                         <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
                             <div class="form-group pt-3">
                                 <div class="input-field"
+                                    [class.error]="signupForm.controls['username'].dirty && signupForm.hasError('required','username')">
+                                    <span class="fa fa-user p-2"></span>
+                                    <input type="text" formControlName="username" placeholder="Enter your username">
+                                </div>
+                                <small *ngIf="signupForm.controls['username'].dirty && signupForm.hasError('required','username')" style="color: red;">
+                                    *Username is required </small>
+                            </div>
+                            <div class="form-group pt-3">
+                                <div class="input-field"
                                     [class.error]="signupForm.controls['email'].dirty && signupForm.hasError('required','email')">
                                     <span class="fa fa-envelope p-2"></span>
                                     <input type="text" formControlName="email" placeholder="Enter email id">
@@ -19,7 +28,7 @@
                             </div>
                             <small
                                 *ngIf="signupForm.controls['email'].dirty && signupForm.hasError('required','email')"
-                                style="color: red;"> *Username is required </small>
+                                style="color: red;"> *Email is required </small>
                             <div class="form-group pt-3">
                                 <div class="input-field"
                                     [class.error]="signupForm.controls['password'].dirty && signupForm.hasError('required','password')">

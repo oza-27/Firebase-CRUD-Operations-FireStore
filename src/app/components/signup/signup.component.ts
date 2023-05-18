@@ -20,7 +20,8 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
     this.signupForm = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
-      password: [null, Validators.required]
+      password: [null, Validators.required],
+      username:[null, Validators.required]
     })
   }
 
@@ -33,7 +34,8 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
     if (this.signupForm.valid) {
-      this.auth.register(this.signupForm.get('email')?.value, this.signupForm.get('password')?.value)
+      this.auth.register(this.signupForm.get('email')?.value, this.signupForm.get('password')?.value, 
+      this.signupForm.get('username')?.value)
       this.username = '';
       this.password = '';
       // send obj to database

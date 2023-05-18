@@ -29,11 +29,15 @@ export class FirebaseService {
     }
 
     // for registration
-    register(email: string, password: string) {
+    register(email: string, password: string, username:string) {
         this.fa.createUserWithEmailAndPassword(email, password).then((data) => {
+            const user = data.user;
             this.sendVerificationMail();
             this.route.navigate(['/login']);
             alert("Registration successfull");
+            return user?.updateProfile({
+                displayName: username
+            })
         }, error => {
             alert("Something went wrong");
         });
