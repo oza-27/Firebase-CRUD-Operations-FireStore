@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Note } from 'src/app/note';
+import { FirebaseService } from 'src/app/services/firebase.service';
 import { NoteService } from 'src/app/services/note.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class NoteComponent implements OnInit {
     noteDesc: ''
   }
   notForm!: FormGroup
-  constructor(private fb:FormBuilder, private noteService:NoteService) 
+  constructor(private fb:FormBuilder, private noteService:NoteService, private auth:FirebaseService) 
   { 
     this.notForm = this.fb.group({
       title: [null, Validators.required],
@@ -86,5 +87,9 @@ export class NoteComponent implements OnInit {
       alert("Data Updated successfully")
     })
     this.editForm.reset()
+  }
+
+  logout(){
+    this.auth.logout()
   }
 }

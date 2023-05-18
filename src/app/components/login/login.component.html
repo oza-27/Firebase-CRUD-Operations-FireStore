@@ -1,0 +1,58 @@
+<div class="outer">
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3">
+                <div class="panel border bg-white">
+                    <div class="panel-heading">
+                        <h3 class="pt-3 font-weight-bold">
+                            Login
+                        </h3>
+                    </div>
+                    <div class="panel-body p-3">
+                        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                            <div class="form-group pt-3">
+                                <div class="input-field"
+                                    [class.error]="loginForm.controls['email'].dirty && loginForm.hasError('required','email')">
+                                    <span class="fa fa-user p-2"></span>
+                                    <input type="email" formControlName="email" placeholder="Enter email">
+                                </div>
+                            </div>
+                            <small
+                                *ngIf="loginForm.controls['email'].dirty && loginForm.hasError('required','email')"
+                                style="color: red;"> *Username is required </small>
+                            <div class="form-group pt-3">
+                                <div class="input-field"
+                                    [class.error]="loginForm.controls['password'].dirty && loginForm.hasError('required','password')">
+                                    <span class="fa fa-lock p-2"></span>
+                                    <input [type]="type" formControlName="password" placeholder="Enter password">
+                                    <span (click)="hideShow()" class="fa {{eyeIcon}} p-2"></span>
+                                </div>
+                            </div>
+                            <small
+                                *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required','password')"
+                                class="text-danger" style="color: red;"> *Password is required </small>
+                            <div class="form-inline fr mt-4">
+                                <a id="forgetPass" class="font-weight-bold" target="_blank" routerLink="/forgot-password"> Forget Password? </a>
+                            </div>
+                            <button class="btn btn-outline-primary btn-lock mt-4 w-100"
+                                type="submit"> Login </button>
+                            <div class="text-center pt-4 text-muted">
+                                Don't have account? <a id="forgetPass" routerLink="/signup" routerLinkActive="Active">
+                                    SignUp </a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="mx-3 my-2 py-2 bordert">
+                        <div class="text-center py-3">
+                            <a href="https://www.facebook.com/" alt="" target="_blank" class="px-2"> <img
+                                    src="../../assets/images/facebook_icon.png"> </a>
+                            <button><a class="px-2"> <img src="../../assets/images/image8-2.jpg" (click)="auth.googleAuth()"> </a> </button>
+                            <a class="px-2" href="https://github.com/" alt="" target="_blank"> <img
+                                    src="../../assets/images/github_icon.png"> </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
