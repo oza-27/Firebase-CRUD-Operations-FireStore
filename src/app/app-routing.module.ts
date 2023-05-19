@@ -7,15 +7,19 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './services/auth.guard';
+import { TableComponent } from './components/table/table.component';
+import { PhoneComponent } from './components/phone/phone.component';
 
 const routes: Routes = [
   { path: "", component: LoginComponent },
   {path:"login",component:LoginComponent},
   {path:"signup",component:SignupComponent},
-  {path:"note",component:NoteComponent, canActivate:[AuthGuard]},
+  {path:"note",component:NoteComponent},
   { path:"verify-email-address",component:VerifyEmailComponent},
   {path:"forgot-password",component:ForgotPasswordComponent, canActivate:[AuthGuard]},
-  {path:"dashboard",component:DashboardComponent, canActivate:[AuthGuard]}
+  {path:"dashboard",component:DashboardComponent},
+  {path:"table",component:TableComponent},
+  {path:"phone",component:PhoneComponent}
 ];
 
 @NgModule({

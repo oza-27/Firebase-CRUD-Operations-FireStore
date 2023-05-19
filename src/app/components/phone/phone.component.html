@@ -1,0 +1,14 @@
+<div class="container m-2 p-2">
+    <div class="border p-2" style="width: 80%;margin-left:15%;margin-top: 20%;margin-right: 20%;background-color: azure;">
+        <h3 class="text-center" style="font-style: italic;color: lightcoral;"> Login with Phone Number </h3>
+        <div class="form-group mt-3">
+            <form [formGroup]="getOtp">
+                <div class="input-field p-2">
+                    <span class="fa fa-phone"></span> &nbsp;
+                    <input type="text" formControlName="phone" maxlength="10" placeholder="Enter your phone number" />
+                </div>
+                <button class="btn btn-outline-primary btn-lock mt-4 w-45" type="submit"> Get OTP </button>
+            </form>
+        </div>
+    </div>
+</div>

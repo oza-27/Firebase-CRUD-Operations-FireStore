@@ -5,7 +5,7 @@
                 <div class="panel border bg-white">
                     <div class="panel-heading">
                         <h3 class="pt-3 font-weight-bold">
-                            Login
+                            <span class="fa fa-solid fa-lock"></span> Login 
                         </h3>
                     </div>
                     <div class="panel-body p-3">
@@ -38,17 +38,15 @@
                                 type="submit"> Login </button>
                             <div class="text-center pt-4 text-muted">
                                 Don't have account? <a id="forgetPass" routerLink="/signup" routerLinkActive="Active">
-                                    SignUp </a>
+                                    SignUp </a> | 
+                                Try Another way? <a id="forgetPass" routerLink="/phone" target="_blank"> Click here </a>
                             </div>
                         </form>
                     </div>
                     <div class="mx-3 my-2 py-2 bordert">
                         <div class="text-center py-3">
-                            <a href="https://www.facebook.com/" alt="" target="_blank" class="px-2"> <img
-                                    src="../../assets/images/facebook_icon.png"> </a>
                             <button><a class="px-2"> <img src="../../assets/images/image8-2.jpg" (click)="auth.googleAuth()"> </a> </button>
-                            <a class="px-2" href="https://github.com/" alt="" target="_blank"> <img
-                                    src="../../assets/images/github_icon.png"> </a>
+                            <button><a class="px-2"(click)="auth.githubAuth()" target="_blank"> <img src="../../assets/images/github_icon.png"> </a> </button>
                         </div>
                     </div>
                 </div>

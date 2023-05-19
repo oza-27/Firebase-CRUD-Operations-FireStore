@@ -2,25 +2,36 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth'
 import { Router } from '@angular/router';
 import { GoogleAuthProvider } from 'firebase/auth';
+import { ToastrService } from 'ngx-toastr';
+import { GithubAuthProvider } from 'firebase/auth';
 @Injectable({
     providedIn: 'root'
 })
 export class FirebaseService {
-    isLogedIn: boolean = false
-    constructor(public fa: AngularFireAuth, private route: Router) { }
-
+    isLogedIn: boolean = false   
+    constructor(public fa: AngularFireAuth, private route: Router, private toastr: ToastrService) { }
     // for login
     login(email: string, password: string) {
         this.fa.signInWithEmailAndPassword(email, password).then(res => {
             this.isLogedIn = true;
             localStorage.setItem('user', JSON.stringify(res.user));
-            this.route.navigate(['/note'])
-        }, err => {
-            alert("something went wrong");
-            this.route.navigate(['/login'])
+            this.route.navigate(['/dashboard']);
+            this.toastr.success('Login Successfully:');
+          
+        }).catch((err) => {
+            if (err.code == "auth/invalid-email") {
+                this.toastr.error("Invalid Email Id");
+                this.route.navigate(['/login'])
+            }
+            debugger
+            if (err.code == "auth/invalid-password") {
+                this.toastr.error("Wrong Password!Try again");
+                this.route.navigate(['/login'])
+            }
         })
     }
 
+    // sending message for verification
     public sendVerificationMail(){
         return this.fa.currentUser.then((u:any) => 
             u.sendVerificationMail()).then(()=>{
@@ -35,11 +46,15 @@ export class FirebaseService {
             this.sendVerificationMail();
             this.route.navigate(['/login']);
             alert("Registration successfull");
-            return user?.updateProfile({
+            
+            // adding fields 
+            return user.updateProfile({
                 displayName: username
             })
         }, error => {
-            alert("Something went wrong");
+            if (error.code == "auth/email-already-in-use") {
+                this.toastr.error("Email already exists!Please register with new mail:")
+            }
         });
     }
 
@@ -71,4 +86,20 @@ export class FirebaseService {
             alert("error");
         })
     }
+
+    // signin with Github
+    githubAuth(){
+        var provider = this.authGithub(new GithubAuthProvider())
+    }
+
+    authGithub(provider:any){
+        return this.fa.signInWithPopup(provider)
+        .then((result) =>{
+            alert("You are successfully logged in")
+            this.route.navigate(['/dashboard'])
+        }).catch((error) =>{
+            this.route.navigate(['/login'])
+        })
+    }
+
 }

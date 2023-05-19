@@ -1,3 +1,4 @@
+import { ToastrModule } from 'ngx-toastr';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -16,7 +17,10 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { AuthGuard } from './services/auth.guard';
+
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
+import { TableComponent } from './components/table/table.component';
+import { PhoneComponent } from './components/phone/phone.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,9 @@ import { AuthGuard } from './services/auth.guard';
     SignupComponent,
     VerifyEmailComponent,
     DashboardComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    TableComponent,
+    PhoneComponent
   ],
   imports: [
     BrowserModule,
@@ -35,9 +41,13 @@ import { AuthGuard } from './services/auth.guard';
     AngularFireAuthModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
-    AngularFireModule.initializeApp(environment.firebaseConfig)
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    BrowserAnimationsModule, 
+    ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    provideAnimations(), // required animations providers
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
