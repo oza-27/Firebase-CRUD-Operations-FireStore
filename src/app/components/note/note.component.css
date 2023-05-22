@@ -7,7 +7,13 @@
     background-color: #fff;
     border: 0 solid transparent;
     border-radius: 1;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
+    margin-top: 15%;
+}
+
+.card:hover{
+    background-color: teal;
+    transform: scale(1.1);
 }
 
 .card-body{
@@ -24,4 +30,31 @@
 
 a{
     text-decoration: none;
+}
+
+.outer{
+    background-image: url("../../../assets/images/wallpaper.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    backface-visibility: visible;
+    background-clip: border-box;
+}
+
+.bi-pen:hover{
+    background-color:teal;
+    cursor:pointer;
+}
+
+.bi-trash:hover {
+    background-color: teal;
+    cursor: pointer;
+}
+
+#createNote{
+    margin: 20%;
+}
+
+nav{
+    background-image: url("../../../assets/images/wallpaper.jpg");
+    background-size: contain;
 }

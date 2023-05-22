@@ -12,6 +12,26 @@
                         <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
                             <div class="form-group pt-3">
                                 <div class="input-field"
+                                    [class.error]="signupForm.controls['firstname'].dirty && signupForm.hasError('required','firstname')">
+                                    <span class="fa fa-user p-2"></span>
+                                    <input type="text" formControlName="firstname" placeholder="Enter your firstname">
+                                </div>
+                                <small *ngIf="signupForm.controls['firstname'].dirty && signupForm.hasError('required','firstname')"
+                                    style="color: red;">
+                                    *firstname is required </small>
+                            </div>
+                            <div class="form-group pt-3">
+                                <div class="input-field"
+                                    [class.error]="signupForm.controls['lastname'].dirty && signupForm.hasError('required','lastname')">
+                                    <span class="fa fa-user p-2"></span>
+                                    <input type="text" formControlName="lastname" placeholder="Enter your lastname">
+                                </div>
+                                <small *ngIf="signupForm.controls['lastname'].dirty && signupForm.hasError('required','lastname')"
+                                    style="color: red;">
+                                    *lastname is required </small>
+                            </div>
+                            <div class="form-group pt-3">
+                                <div class="input-field"
                                     [class.error]="signupForm.controls['username'].dirty && signupForm.hasError('required','username')">
                                     <span class="fa fa-user p-2"></span>
                                     <input type="text" formControlName="username" placeholder="Enter your username">

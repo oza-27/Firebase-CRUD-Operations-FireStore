@@ -1,56 +1,49 @@
+import { IUser } from 'src/app/IUser';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth'
 import { Router } from '@angular/router';
 import { GoogleAuthProvider } from 'firebase/auth';
 import { ToastrService } from 'ngx-toastr';
 import { GithubAuthProvider } from 'firebase/auth';
+import { Firestore, collection, doc, collectionData, addDoc } from '@angular/fire/firestore';
+import { sendSignInLinkToEmail, getAuth } from 'firebase/auth';
 @Injectable({
     providedIn: 'root'
 })
 export class FirebaseService {
+    usersList:IUser;
     isLogedIn: boolean = false   
-    constructor(public fa: AngularFireAuth, private route: Router, private toastr: ToastrService) { }
+    constructor(public fa: AngularFireAuth, private route: Router, private toastr: ToastrService, private fs:Firestore) { }
     // for login
-    login(email: string, password: string) {
+    login(email: string, password: string, user:IUser) {
         this.fa.signInWithEmailAndPassword(email, password).then(res => {
             this.isLogedIn = true;
             localStorage.setItem('user', JSON.stringify(res.user));
             this.route.navigate(['/dashboard']);
             this.toastr.success('Login Successfully:');
-          
         }).catch((err) => {
             if (err.code == "auth/invalid-email") {
                 this.toastr.error("Invalid Email Id");
                 this.route.navigate(['/login'])
-            }
-            debugger
-            if (err.code == "auth/invalid-password") {
-                this.toastr.error("Wrong Password!Try again");
+            } else if (err.code == "auth/invalid-password")
+            {
+                this.toastr.error('Wrong Password!Try again');
                 this.route.navigate(['/login'])
+            } else{
+                this.toastr.error("Email or Password doesnot match");
             }
         })
     }
 
-    // sending message for verification
-    public sendVerificationMail(){
-        return this.fa.currentUser.then((u:any) => 
-            u.sendVerificationMail()).then(()=>{
-                this.route.navigate(['/verify-email-address'])
-            })
-    }
 
     // for registration
-    register(email: string, password: string, username:string) {
-        this.fa.createUserWithEmailAndPassword(email, password).then((data) => {
+    register(users:IUser) {
+        this.fa.createUserWithEmailAndPassword(users.email, users.password).then((data) => {
             const user = data.user;
-            this.sendVerificationMail();
+            users.id = doc(collection(this.fs, 'id')).id
             this.route.navigate(['/login']);
-            alert("Registration successfull");
+            return addDoc(collection(this.fs, 'Users'), users)
             
-            // adding fields 
-            return user.updateProfile({
-                displayName: username
-            })
         }, error => {
             if (error.code == "auth/email-already-in-use") {
                 this.toastr.error("Email already exists!Please register with new mail:")
@@ -89,9 +82,9 @@ export class FirebaseService {
 
     // signin with Github
     githubAuth(){
-        var provider = this.authGithub(new GithubAuthProvider())
+        var provider = this.authGithub(new GithubAuthProvider());
     }
-
+    
     authGithub(provider:any){
         return this.fa.signInWithPopup(provider)
         .then((result) =>{

@@ -7,3 +7,13 @@ a{
 .btn{
     margin:1px
 }
+
+.outer {
+    height: 100vh;
+    background-image: url("../../../assets/images/1567772.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+nav{
+    background-image: url("../../../assets/images/1567772.jpg");
+}

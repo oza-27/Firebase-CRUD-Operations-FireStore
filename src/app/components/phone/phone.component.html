@@ -7,8 +7,13 @@
                     <span class="fa fa-phone"></span> &nbsp;
                     <input type="text" formControlName="phone" maxlength="10" placeholder="Enter your phone number" />
                 </div>
-                <button class="btn btn-outline-primary btn-lock mt-4 w-45" type="submit"> Get OTP </button>
+                <small *ngIf="getOtp.controls['phone'].dirty && getOtp.hasError('required','phone')" style="color: red;">
+                    *phone is required </small>
+                <button class="btn btn-outline-primary btn-lock mt-4 w-45" type="submit" (click)="getCode()"> Get OTP </button>
             </form>
+        </div>
+        <div id="sign-in-button">
+
         </div>
     </div>
 </div>

@@ -19,9 +19,11 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
     this.signupForm = this.fb.group({
+      firstname:[null, Validators.required],
+      lastname:[null, Validators.required],
+      username:[null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
       password: [null, Validators.required],
-      username:[null, Validators.required]
     })
   }
 
@@ -34,11 +36,8 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
     if (this.signupForm.valid) {
-      this.auth.register(this.signupForm.get('email')?.value, this.signupForm.get('password')?.value, 
-      this.signupForm.get('username')?.value)
-      this.username = '';
-      this.password = '';
-      // send obj to database
+      this.auth.register(this.signupForm.value);
+
     }
     else {
       // error using toastr and with required fields...
